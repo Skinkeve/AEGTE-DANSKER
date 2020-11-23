@@ -27,17 +27,19 @@ class Playermec():
         self.playerscoredict = {}
         self.counter = len(list)-1
         for x in list:
-            #self.listobject = self.playerlist[self.counter]
             self.playerscoredict.update({self.playerlist[self.counter] : 0})
             self.counter -= 1
         print(self.playerscoredict)
+        Playermec.Scoreboard(self.playerscoredict)
+        #kør det næste der skal køres herefter
 
-
+    def Scoreboard(self, dict):#indeholder selve spillerne og deres point
+        self.accesscoreboard = dict
 
     def Scoreprint(): #skal printe spillernes score
         pass
 
-    def ScoreAdd(player, amount):
+    def ScoreAdd(player, amount):#skal tilføje en værdi til spillernes Scoreboard
         pass
 
 
