@@ -14,18 +14,32 @@ class Start():
             self.playerlist.append(self.playername)
             self.amount -= 1
         os.system('CLS')
-        Playermec.Players(self.playerlist)
+        Playermec.ScoreboardCreate(self.playerlist)
 
 class In_out():
     def Score():
         pass
 
 class Playermec():
-    def Players(self,list):
-        print(list)
 
-    def Score():
+    def ScoreboardCreate(self,list):
+        self.playerlist = list
+        self.playerscoredict = {}
+        self.counter = len(list)-1
+        for x in list:
+            #self.listobject = self.playerlist[self.counter]
+            self.playerscoredict.update({self.playerlist[self.counter] : 0})
+            self.counter -= 1
+        print(self.playerscoredict)
+
+
+
+    def Scoreprint(): #skal printe spillernes score
         pass
+
+    def ScoreAdd(player, amount):
+        pass
+
 
 class Gamemec():
     def Randompick():
