@@ -46,7 +46,7 @@ class Scoremec():#holder styr på spillernes Score
         self.dict = Scoremec.accesscoreboard#henter det aktuelle dict der indeholder score og players
         self.dict[player] += amount #tilføjer score til den givne player
         Scoremec.Scoreboard(self.dict)#opdaterer det dict der ligger i funktionen scoreboard
-        Scoremec.Scoreprint()
+        #Scoremec.Scoreprint()
 
 class Gamemec(): #holder styr på "spillekort" og turns
 
@@ -60,8 +60,9 @@ class Gamemec(): #holder styr på "spillekort" og turns
 
     def Randompick(self):
         while True:
+            Scoremec.Scoreprint()
             Gamemec.Turn()
-            self.pick = random.randrange(5,6)
+            self.pick = random.randrange(11,12)
             self.turnlength = random.randrange(5,15)
             if self.pick == 1:
                 Play.Nofuck(self.turnlength)
@@ -256,20 +257,66 @@ class Gamecards():
         #kaptajn ding dong
 
     def Guessvalues(self): #gæt de 10 danske værdier
+        self.unguessed = ["1. xxxxxxxxxxxxxxxxx - 10 point","2. xxxxxx - 9 point","3. xxxxxx - 8 point","4. xxxxxx for xxxxx - 7 point","5. xxxxxxxxxxxxxxxx - 6 point","6. Det xxxxxx xxxxx - 5 point","7. xxxxxxxxxxxx og xxxxxxxxxxxx - 4 point","8. xxxxxxx - 3 point","9. xxxxx - 2 point","10. Den xxxxxxx xxxxxxxxx - 1 point"]
+        self.guessed = ["1. Velfærdssamfundet - 10 point","2. Frihed - 9 point","3. Tillid - 8 point","4. Lighed for loven - 7 point","5. Kønsligestilling - 6 point","6. Det danske sprog - 5 point","7. Foreningsliv og frivillighed - 4 point","8. Frisind - 3 point","9. Hygge - 2 point","10. Den kristne kulturarv - 1 point"]
+        self.guessplayer = ["","","","","","","","","",""]
+        self.playerlist = Start.playerlist
+        self.playercounter = len(self.playerlist)-1
+        self.printcount = 0
         while True:
-            print("Dette er en form for quiz hvor i skal gætte de 10 danske værdier, holdninger, vaner, skikke og særlige forhold, der udgør den nationale identitet.\nDette er resultatet af stemmer fra 300.000 danskere\nGætter man forkert er det den næste persons tur.\nGætteriet går på runde, med urets gang og",Gamemec.Randomplayer(),"starter\n")
-            print("1. xxxxxxxxxxxxxxxxx - 10 point")
-            print("2. xxxxxx - 9 point")
-            print("3. xxxxxx - 8 point")
-            print("4. xxxxxx for xxxxx - 7 point")
-            print("5. xxxxxxxxxxxxxxxx - 6 point")
-            print("6. Det xxxxx xxxxx - 5 point")
-            print("7. xxxxxxxxxxxx og xxxxxxxxxxxx - 4 point")
-            print("8. xxxxxxx - 3 point")
-            print("9. xxxxx - 2 point")
-            print("10. Den xxxxxxx xxxxxxxxx - 1 point")
-            self.svar = input("")
-            #if
+            print("Dette er en form for quiz hvor i skal gætte de 10 danske værdier, holdninger, vaner, skikke og særlige forhold, der udgør den nationale identitet.\nDette er resultatet af stemmer fra 300.000 danskere\nGætter man forkert er det automatisk den næste persons tur.\n")
+            self.player = self.playerlist[self.playercounter]
+            self.playercounter -=1
+            if self.playercounter < 0:
+                self.playercounter = len(self.playerlist)-1
+            print("Den der gætter er", self.player,"\n")
+            for x in self.unguessed:
+                print(self.unguessed[self.printcount],self.guessplayer[self.printcount])
+                self.printcount += 1
+            self.printcount = 0
+            self.svar = input("Gæt på en af svarmulighederne!\n").lower()
+            if self.svar == "velfærdssamfundet" or self.svar == "velfærd" or self.svar == "velfærdssamfund":
+                self.unguessed[0] = self.guessed[0]
+                self.guessplayer[0] = self.player
+                Scoremec.ScoreAdd(self.player,10)
+            elif self.svar == "frihed":
+                self.unguessed[1] = self.guessed[1]
+                self.guessplayer[1] = self.player
+                Scoremec.ScoreAdd(self.player,9)
+            elif self.svar == "tillid":
+                self.unguessed[2] = self.guessed[2]
+                self.guessplayer[2] = self.player
+                Scoremec.ScoreAdd(self.player,8)
+            elif self.svar == "lighed for loven":
+                self.unguessed[3] = self.guessed[3]
+                self.guessplayer[3] = self.player
+                Scoremec.ScoreAdd(self.player,7)
+            elif self.svar == "kønsligestilling" or self.svar == "ligestilling":
+                self.unguessed[4] = self.guessed[4]
+                self.guessplayer[4] = self.player
+                Scoremec.ScoreAdd(self.player,6)
+            elif self.svar == "det danske sprog":
+                self.unguessed[5] = self.guessed[5]
+                self.guessplayer[5] = self.player
+                Scoremec.ScoreAdd(self.player,5)
+            elif self.svar == "foreningsliv og frivillighed":
+                self.unguessed[6] = self.guessed[6]
+                self.guessplayer[6] = self.player
+                Scoremec.ScoreAdd(self.player,4)
+            elif self.svar == "frisind":
+                self.unguessed[7] = self.guessed[7]
+                self.guessplayer[7] = self.player
+                Scoremec.ScoreAdd(self.player,3)
+            elif self.svar == "hygge":
+                self.unguessed[8] = self.guessed[8]
+                self.guessplayer[8] = self.player
+                Scoremec.ScoreAdd(self.player,2)
+            elif self.svar == "den kristne kulturarv" or self.svar == "kristendom":
+                self.unguessed[9] = self.guessed[9]
+                self.guessplayer[9] = self.player
+                Scoremec.ScoreAdd(self.player,1)
+            os.system('CLS')
+            Scoremec.Scoreprint()
 
     def Jantelov(self,turnlength):
         pass
