@@ -65,7 +65,7 @@ class Gamemec(): #holder styr på "spillekort" og turns
         self.cooldown3 = 0
         self.play = None
         while True:
-            self.pick = random.randrange(1,16)
+            self.pick = random.randrange(1,18)
             self.turnlength = random.randrange(5,15)
             if self.pick == 1 and self.cooldown1 < 0:
                 self.play = Play.Nofuck
@@ -91,7 +91,11 @@ class Gamemec(): #holder styr på "spillekort" og turns
                 self.play = Play.Scenario
             elif self.pick == 14:
                 self.play = Play.Guessvalues
-            elif self.pick == 15 and self.cooldown3 < 0:
+            elif self.pick == 15:
+                self.play = Play.Rasmus
+            elif self.pick == 16:
+                self.play = Play.Reference
+            elif self.pick == 17 and self.cooldown3 < 0:
                 self.play = Play.Jantelov
                 self.cooldown3 = self.turnlength+1
             else:
@@ -158,7 +162,7 @@ class Gamemec(): #holder styr på "spillekort" og turns
 class Gamecards():
 
     def Nofuck(self,turnlength):
-        self.cardtxt = "INGEN MÅ SIGE FUCK! straffen er 2 tåre"
+        self.cardtxt = "Jeg hader amerikanisering. INGEN MÅ SIGE FUCK! straffen er 2 tåre"
         Gamemec.Activecardsadd(self.cardtxt,turnlength)
 
     def Queen(self):
@@ -206,7 +210,32 @@ class Gamecards():
             Scoremec.ScoreAdd(self.cardplayer, -2)
 
     def Guessalt(self):
-        pass
+        self.truestatements = ["Avavdvavdejrkdlavsjfkavahdkahahddad, hvor er det crazy, det her.","Jeg må bare sige, at jeg tager afstand fra mig selv.","Det er God damn seriøst, det her.","Please write that im gay.","Som led i legaliseringen skal det være lovligt at dyrke økologisk cannabis til eget forbrug, både rekreationelt og medicinsk."]
+        self.falsestatements = ["Jeg orker altså bare ikke en debat med folk fra LA","Jeg har aldrig produceret eller købt hash","Det sker ofte at jeg går en tur gennem cristiania","Legaliseringen af hash kunne åbne mange jobmuligheder for immigranter og andre mennesker uden uddannelse"]
+        self.falsestatement1 = random.choice(self.falsestatements)
+        self.falsestatement2 = random.choice(self.falsestatements)
+        while self.falsestatement1 == self.falsestatement2:
+            self.falsestatement2 = random.choice(self.falsestatements)
+        self.number = random.randrange(1,4)
+        if self.number == 1:
+            print("1.", random.choice(self.truestatements))
+            print("2.", self.falsestatement1)
+            print("3.", self.falsestatement2)
+        elif self.number == 2:
+            print("1.", self.falsestatement1)
+            print("2.", random.choice(self.truestatements))
+            print("3.", self.falsestatement2)
+        elif self.number == 3:
+            print("1.", self.falsestatement1)
+            print("2.", self.falsestatement2)
+            print("3.", random.choice(self.truestatements))
+        self.answer = int(input("Angiv med tal hvilket citat er fra DF\n"))
+        if self.answer == self.number:
+            print("KORREKT!")
+            Scoremec.ScoreAdd(self.cardplayer, 5)
+        else:
+            print("FORKERT!")
+            Scoremec.ScoreAdd(self.cardplayer, -2)
 
     def Danishvalue(self):
         print("I skal på runde sige en dansk værdi, taberen er den der ikke kan sige en dansk værdi eller siger en værdi som majoriteten er uenig med.\nTaberen skal drikke så mange tåre som antallet af runder man når igennem\n")
@@ -274,7 +303,7 @@ class Gamecards():
             self.loosers.pop(0)
 
     def Scenario(self):
-        self.pick = random.randrange(1,9)
+        self.pick = random.randrange(1,6)
         if self.pick == 1:
             print("TYSKERNE KOMMER!\nPeg en pistol i sydlig retning!")
         elif self.pick == 2:
@@ -285,12 +314,6 @@ class Gamecards():
             print("KAPTAJN DING DONG!\nBasicly Kaptajn Morgan!")
         elif self.pick == 5:
             print("TORDENSKJOLD!\nLign Tordenskjold!")
-        elif self.pick == 6:
-            print("Møns eller Stevns klint?")
-        elif self.pick == 7:
-            print("Søren ryge eller Jørgen leth")
-        elif self.pick == 8:
-            print("Aqua eller ???")
         Scoremec.ScoreAdd(Gamemec.Getplayer(input('Taberen er den der sidst gjorde pågældende ting: ')),-2)
         #tyskerne kommer
         #svendsken kommer
@@ -360,8 +383,17 @@ class Gamecards():
             os.system('CLS')
             Scoremec.Scoreprint()
 
+    def Rasmus(self):
+        print("Der der kan lave den bedste efterligning af Rasmus Paludan får 2 point alle andre drikker 1 tår")
+        Scoremec.ScoreAdd(Gamemec.Getplayer(input('Vinderen er: ')),2)
+
+    def Reference(self):
+        print("På runde skal der laves referencer til danske film,",Gamemec.Randomplayer(),"starter\nFor hver runde drikker alle en tår, den der taber får -1 point")
+        Scoremec.ScoreAdd(Gamemec.Getplayer(input('Taberen er: ')),-1)
+
     def Jantelov(self,turnlength):
-        pass
+        print("JANTELOVEN ER VEDTAGET! At tale positivt om sig selv medfører en bunder, at sige jeg medfører en tår")
+        Gamemec.Activecardsadd(self.cardtxt,turnlength)
 
 #en class der udvælger fra en anden class
 
