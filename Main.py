@@ -65,7 +65,7 @@ class Gamemec(): #holder styr på "spillekort" og turns
         self.cooldown3 = 0
         self.play = None
         while True:
-            self.pick = random.randrange(1,13)
+            self.pick = random.randrange(1,16)
             self.turnlength = random.randrange(5,15)
             if self.pick == 1 and self.cooldown1 < 0:
                 self.play = Play.Nofuck
@@ -85,13 +85,13 @@ class Gamemec(): #holder styr på "spillekort" og turns
                 self.play = Play.Danishvalue
             elif self.pick == 8:
                 self.play = Play.Kapsel
-            elif self.pick == 9:
+            elif self.pick > 8 and self.pick < 13:
                 self.play = Play.Vote
-            elif self.pick == 10:
+            elif self.pick == 13:
                 self.play = Play.Scenario
-            elif self.pick == 11:
+            elif self.pick == 14:
                 self.play = Play.Guessvalues
-            elif self.pick == 12 and self.cooldown2 < 0:
+            elif self.pick == 15 and self.cooldown3 < 0:
                 self.play = Play.Jantelov
                 self.cooldown3 = self.turnlength+1
             else:
@@ -244,21 +244,25 @@ class Gamecards():
         elif self.pick == 10:
             print("Kim larsen eller Bamses venner")
         elif self.pick == 11:
-            print("Master fatmann eller ??")
+            print("Lego eller ????????????????????????????????????")
         elif self.pick == 12:
             print("Blachman eller Bubber")
         elif self.pick == 13:
             print("Linse kessler eller Gustav")
         elif self.pick == 14:
-            print("Chili klaus eller ??")
+            print("Chili klaus eller Master fatmann")
         elif self.pick == 16:
             print("Mick Øgendahl eller Anders Matthesen")
         elif self.pick == 17:
             print("Olsen banden eller Dirch Passer")
         elif self.pick == 18:
             print("Matador eller Huset på christianshavn")
-        elif self.pick == 18:
+        elif self.pick == 19:
             print("Far til fire eller Min søsters børn")
+        elif self.pick == 20:
+                print("Thorvald Stauning eller Harald Blåtand")
+        elif self.pick == 21:
+            print("Anders Fogh eller Lars Lykke Rasmussen")
         self.amount = int(input("\nHvor mange mennesker tabte: "))
         print("Angiv taberne!")
         self.loosers = []
