@@ -55,60 +55,96 @@ class Gamemec(): #holder styr på "spillekort" og turns
             self.turncount += 1
         except AttributeError:#hvis turncount ikke findes så lav turn til en værdi af 1
             self.turncount = 1
-        Gamemec.Updateactivecards(self.turncount)
+        print("I er på tur", self.turncount)
+        Gamemec.Updateactivecards()
 
 
     def Randompick(self):
+        self.cooldown1 = 0
+        self.cooldown2 = 0
+        self.cooldown3 = 0
+        self.play = None
         while True:
+            self.pick = random.randrange(1,13)
+            self.turnlength = random.randrange(5,15)
+            if self.pick == 1 and self.cooldown1 < 0:
+                self.play = Play.Nofuck
+                self.cooldown1 = self.turnlength+1
+            elif self.pick == 2:
+                self.play = Play.Queen
+            elif self.pick == 3:
+                self.play = Play.Stereotype
+            elif self.pick == 4 and self.cooldown2 < 0:
+                self.play = Play.Drukferie
+                self.cooldown2 = self.turnlength+1
+            elif self.pick == 5:
+                self.play = Play.Guessdf
+            elif self.pick == 6:
+                self.play = Play.Guessalt
+            elif self.pick == 7:
+                self.play = Play.Danishvalue
+            elif self.pick == 8:
+                self.play = Play.Kapsel
+            elif self.pick == 9:
+                self.play = Play.Vote
+            elif self.pick == 10:
+                self.play = Play.Scenario
+            elif self.pick == 11:
+                self.play = Play.Guessvalues
+            elif self.pick == 12 and self.cooldown2 < 0:
+                self.play = Play.Jantelov
+                self.cooldown3 = self.turnlength+1
+            else:
+                Gamemec.Randompick()
+            self.cooldown1 -= 1
+            self.cooldown2 -= 1
+            self.cooldown3 -= 1
             Scoremec.Scoreprint()
             Gamemec.Turn()
-            self.pick = random.randrange(11,12)
-            self.turnlength = random.randrange(5,15)
-            if self.pick == 1:
-                Play.Nofuck(self.turnlength)
-            elif self.pick == 2:
-                Play.Queen()
-            elif self.pick == 3:
-                Play.Stereotype()
-            elif self.pick == 4:
-                Play.Drukferie()
-            elif self.pick == 5:
-                Play.Guessdf()
-            elif self.pick == 6:
-                Play.Guessalt()
-            elif self.pick == 7:
-                Play.Danishvalue()
-            elif self.pick == 8:
-                Play.Kapsel()
-            elif self.pick == 9:
-                Play.Vote()
-            elif self.pick == 10:
-                Play.Scenario()
-            elif self.pick == 11:
-                Play.Guessvalues()
-            elif self.pick == 12:
-                Play.Jantelov()
+            try:
+                self.play()
+            except TypeError:
+                self.play(self.turnlength)
 
-    def Updateactivecards(self, turn):#opdaterer kortene når der er gået en tur
-        pass
-
-    def Activecards(self, Cardstring, Turnint):#indeholder hvilke kort er aktive og hvor lang tid de er active i en dict
+    def Updateactivecards(self):#opdaterer kortene når der er gået en tur
         try:
-            self.activecardsdict.update({Cardstring : Turnint})
+            self.dict = Gamemec.activecardsdict
+            self.newdict = {}
+            self.values = list(self.dict.values())
+            self.keys = list(self.dict.keys())
+            self.counter = len(self.values)-1
+            for x in self.values:
+                self.values[self.counter] -=1
+                if self.values[self.counter] == 0:
+                    self.values.pop(self.counter)
+                    self.keys.pop(self.counter)#remove from play måske ved at rykke den tilhørende value bagerst i listen?
+                self.counter -= 1
+            self.counter = len(self.values)-1
+            for x in self.values:
+                self.newdict.update({self.keys[self.counter] : self.values[self.counter]})
+                self.counter -= 1
+            Gamemec.Activecards(self.newdict)
+            Gamemec.Activecardsprint()
         except AttributeError:
-            self.activecardsdict = {}
+            pass
+
+    def Activecards(self, dict):
+        self.activecardsdict = dict
+
+    def Activecardsadd(self, Cardstring, Turnint):#indeholder hvilke kort er aktive og hvor lang tid de er active i en dict
+        try:
+            self.dict = Gamemec.activecardsdict
+        except AttributeError:
+            self.dict = {}
+        self.dict.update({Cardstring : Turnint})
+        Gamemec.Activecards(self.dict)
         print(self.activecardsdict)
 
-    def Activecardsprint():
-        pass
-
-    def Activecardsadd(self,):
-        pass
+    def Activecardsprint(self):
+        print(Gamemec.activecardsdict)
 
     def Randomplayer(self):#udvælger en tilfældig spiller fra listen over spillere og retunerer den
         return random.choice(Start.playerlist)
-
-
 
     def Getplayer(self, player):
         self.player = player.lower()
@@ -122,7 +158,8 @@ class Gamemec(): #holder styr på "spillekort" og turns
 class Gamecards():
 
     def Nofuck(self,turnlength):
-        print("x")
+        self.cardtxt = "INGEN MÅ SIGE FUCK! straffen er 2 tåre"
+        Gamemec.Activecardsadd(self.cardtxt,turnlength)
 
     def Queen(self):
         print("ALLE REJSER SIG OP!\nALLE TAGER HØJRE HÅND PÅ HJERTET\nPå runde siges et ord som er en del af den danske nationalsang i rækkefølge.\nSiger man et forkert ord, sætter sig, falder eller fjerner hånden fra hjertet, har man tabt og skal drikke 2 tåre\nVinderen kåres majestæt og får æren af at slå en person til ridder, og 10 point\n")
@@ -135,7 +172,8 @@ class Gamecards():
         Scoremec.ScoreAdd(Gamemec.Getplayer(input("Den søde person iblandt jer er:")),-2)
 
     def Drukferie(self, turnlength):
-        pass
+        self.cardtxt = "Hvis man rejser sig fra bordet skal man drikke det dobbelte af hvad personen til højre for en har drukket imens man har været væk, bunden redder ikke"
+        Gamemec.Activecardsadd(self.cardtxt,turnlength)
 
     def Guessdf(self):
         self.cardplayer = Gamemec.Randomplayer()
