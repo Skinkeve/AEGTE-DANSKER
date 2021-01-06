@@ -1,0 +1,38 @@
+#: import main Playerdb
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+
+PlayerDB:#refererer til den root funktion der kaldes fra funktionen i think?
+
+<PLayerDB>:
+    orientation: "vertical" # skal vidst laves i BoxLayout?
+    name_input: name #refererer til name_input fra python scriptet
+    player_list: list_view #refererer til player_list fra python scriptet
+    padding: 10 #mellemrum mellem children og layoutbox
+    spacing: 10 #mellemrum mellem children i pixels
+
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+
+        Label:
+            text: "Playername"
+        TextInput:
+            id: name
+
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        Button:
+            text: "Submit new player" #teksten der står på knappen
+            size_hint_x: 15
+            on_press: root.submit_player()
+        Button:
+            text: "Delete player" #teksten der står på knappen
+            size_hint_x: 15
+            on_press: root.remove_player()
+
+    ListView:
+        id: list_view
+        adapter:
+            ListAdapter(data=[], cls=main.PLayerlistbtn)

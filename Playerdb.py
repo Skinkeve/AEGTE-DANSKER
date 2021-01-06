@@ -1,5 +1,49 @@
 import os
 import random
+import kivy
+#https://www.youtube.com/watch?v=dxXsZKmD3Kk&ab_channel=DerekBanas
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ObjectProperty
+from kivy.uix.listview import ListItemButton
+#to do:
+#lave et bedre system til at udvælge kort, måske med en lettere måde at definere chancer på
+#rykke alt in og output ind i den rigtige klasse
+#lav kivy
+class KivyvisualApp(App):
+    def build(self):
+        return Label()
+
+class PLayerlistbtn(ListItemButton):
+    pass
+
+class PlayerDB(BoxLayout):
+    name_input = ObjectProperty()
+    player_list = ObjectProperty()
+
+# jeg vil gerne have at to spillere ikke kan have samme navn og at de ikke kan hedde " "
+    def submit_player(self):
+        player_name = self.name_input.text
+        self.player_list.adapter.data.extend([player_name])
+        self.player_list._trigger_reset_populate()
+
+
+#jeg vil gerne have at man når man fjerner personer fra listen så behøver man ikke klikke hver gang, man kan bare klikke delete og så slettes den øverste
+    def remove_player(self):#fjerner en spiller fra listen
+        if self.player_list.adapter.selection:#hvis der er klikket på en listitem?
+            selection = self.player_list.adapter.selection[0].text
+            self.player_list.adapter.data.remove(selection) #fjern det der er inde i selection variablen
+            self.player_list._trigger_reset_populate() #updater listview
+        #else if self.:#ellers hvis der er flere items,
+            #selection = self.player_list.adapter.selection[0].text
+            #self.player_list.adapter.data.remove(selection) #fjern det der er inde i selection variablen
+            #self.player_list._trigger_reset_populate() #updater listview
+
+class PlayerdbApp(App):
+    def build(self):
+        return PlayerDB()
+
 
 class Start():
     def Game(self):
@@ -402,4 +446,7 @@ In_out = In_out()
 Scoremec = Scoremec()
 Gamemec = Gamemec()
 Play = Gamecards()
-Start.Game()
+build = KivyvisualApp()
+pdb = PlayerdbApp()
+pdb.run()
+#Start.Game()
