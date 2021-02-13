@@ -2,7 +2,7 @@
 #: import ListAdapter kivy.adapters.listadapter.ListAdapter
 #: import ListItemButton kivy.uix.listview.ListItemButton
 
-PlayerDB:#refererer til den root funktion der kaldes fra funktionen i think?
+PlayerDB:#refererer til den root funktion der kaldes fra funktionen og der kan kun være 1
 
 <PLayerDB>:
     orientation: "vertical" # skal vidst laves i BoxLayout?
@@ -31,8 +31,27 @@ PlayerDB:#refererer til den root funktion der kaldes fra funktionen i think?
             text: "Delete player" #teksten der står på knappen
             size_hint_x: 15
             on_press: root.remove_player()
+        Button:
+            text: "Start game" #teksten der står på knappen
+            size_hint_x: 15
+            on_press: root.start_game()
+        Button:
+            text: "Manage cardpack" #teksten der står på knappen
+            size_hint_x: 15
+            on_press: root.pack_pick()
+
+
 
     ListView:
         id: list_view
         adapter:
             ListAdapter(data=[], cls=main.PLayerlistbtn)
+
+<GamePopup>:
+    auto_dismiss: False
+    Button:
+        text: "Next card"
+    Label:
+        text: "Player"
+    Label:
+        text: "Score"
