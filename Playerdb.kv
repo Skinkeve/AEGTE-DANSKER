@@ -34,7 +34,8 @@ PlayerDB:#refererer til den root funktion der kaldes fra funktionen og der kan k
         Button:
             text: "Start game" #teksten der står på knappen
             size_hint_x: 15
-            on_press: root.start_game()
+            #on_press: root.start_game()
+            on_press: root.manager.current = 'game'
         Button:
             text: "Manage cardpack" #teksten der står på knappen
             size_hint_x: 15
@@ -47,8 +48,7 @@ PlayerDB:#refererer til den root funktion der kaldes fra funktionen og der kan k
         adapter:
             ListAdapter(data=[], cls=main.PLayerlistbtn)
 
-<GamePopup>:
-    auto_dismiss: False
+<Game>:
     Button:
         text: "Next card"
     Label:

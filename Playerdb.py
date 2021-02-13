@@ -22,11 +22,13 @@ Builder.load_string("""
             text: 'Start Game'
             on_press: root.manager.current = 'game'
 
+
 <GameScreen>:
     BoxLayout:
         Button:
             text: 'Menu'
             on_press: root.manager.current = 'menu'
+
 """)
 
 # Declare both screens
@@ -35,7 +37,7 @@ class MenuScreen(Screen):
 
 class GameScreen(Screen):
     pass
-
+"""
 class TestApp(App):
     def build(self):
         # Create the screen manager
@@ -43,13 +45,16 @@ class TestApp(App):
         sm.add_widget(MenuScreen(name='menu'))
         sm.add_widget(GameScreen(name='game'))
         return sm
-
+"""
 class PLayerlistbtn(ListItemButton): #fungerer som en slags handler?????
     pass
 
 class PlayerDB(BoxLayout):
     name_input = ObjectProperty()
     player_list = ObjectProperty()
+    sm = ScreenManager()
+    sm.add_widget(MenuScreen(name='menu'))
+    sm.add_widget(GameScreen(name='game'))
 
 # jeg vil gerne have at spillere ikke kan hedde " "
     def submit_player(self):
@@ -94,22 +99,22 @@ class PlayerDB(BoxLayout):
 class Game(BoxLayout):
     pass
         """
+
 class PlayerdbApp(App):
     def build(self):
         return PlayerDB()
+
         """
 class GameApp(App):#object not callable?????? måske fordi det er en app
     def build(self):
         return Game()# returner en anden kivy logic der starter spillet?
         """
-class GamePopup(Popup):
-    pass
 
 
 
 pdb = PlayerdbApp()
 #startgame = GameApp()
-#pdb.run()
+pdb.run()
 #Start.Game()
-if __name__ == '__main__':
-    TestApp().run()
+#if __name__ == '__main__':
+#    TestApp().run()
