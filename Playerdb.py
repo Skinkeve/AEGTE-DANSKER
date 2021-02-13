@@ -25,9 +25,19 @@ class PlayerDB(BoxLayout):
 # jeg vil gerne have at to spillere ikke kan have samme navn og at de ikke kan hedde " "
     def submit_player(self):
         player_name = self.name_input.text
-        self.player_list.adapter.data.extend([player_name])
-        self.player_list._trigger_reset_populate()
-
+        #if player_name not in player_list:
+        try:
+            if player_name not in self.playerlist:
+                self.player_list.adapter.data.extend([player_name])
+                self.player_list._trigger_reset_populate()
+                self.playerlist.append(player_name)
+            else:
+                pass
+        except AttributeError:
+            self.playerlist = []
+            self.player_list.adapter.data.extend([player_name])
+            self.player_list._trigger_reset_populate()
+            self.playerlist.append(player_name)
 
 #jeg vil gerne have at man når man fjerner personer fra listen så behøver man ikke klikke hver gang, man kan bare klikke delete og så slettes den øverste
     def remove_player(self):#fjerner en spiller fra listen
