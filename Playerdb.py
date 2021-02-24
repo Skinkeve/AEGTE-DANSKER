@@ -20,6 +20,8 @@ class MenuScreen(Screen):
     name_input = ObjectProperty(None)#definerer name_input som et ObjectProperty
     player_list = ObjectProperty(None)
 
+    def Handler(ListItemButton):
+        pass
 
     def submit_player(self):
         player_name = self.name_input.text #finder name_input som tekst
@@ -77,6 +79,7 @@ class TestApp(App):
 
 class PLayerlistbtn(ListItemButton): #fungerer som en slags handler?????
     pass
+
 """
 class PlayerDB(BoxLayout):
     name_input = ObjectProperty()
