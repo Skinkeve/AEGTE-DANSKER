@@ -11,6 +11,7 @@ from kivy.uix.popup import Popup
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
+from kivy.properties import StringProperty
 
 #to do:
 #lave et bedre system til at udvælge kort, måske med en lettere måde at definere chancer på
@@ -83,9 +84,13 @@ class MenuScreen(Screen):
         sm.current = "pack"
 
 class GameScreen(Screen):
+    card_text = StringProperty()
 
     def Nextcard(self):
         pass
+
+
+
 class PackScreen(Screen):
     pass
 

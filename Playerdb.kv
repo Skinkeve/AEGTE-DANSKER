@@ -35,11 +35,15 @@
                 text: "Start game" #teksten der står på knappen
                 size_hint_x: 15
                 #on_press: root.start_game()
-                on_press: root.start_game()
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.start_game()
             Button:
                 text: "Manage cardpack" #teksten der står på knappen
                 size_hint_x: 15
-                on_press: root.pack_pick()
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.pack_pick()
     #kæmpe problemer med adapteren nedenfor
         ListView:
             id: list_view
@@ -48,21 +52,36 @@
 
 <GameScreen>:
     name: "game"
-    BoxLayout:
+    FloatLayout:
         padding: 10
         spacing: 10
-        orientation: "vertical"
+        Button:
+            text: "Return"
+            size_hint: .5,.10
+            pos_hint: {'x':0,'top':1}
+            on_press:
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'menu'
         Button:
             text: "Next card"
+            size_hint: .5, .25
+            pos_hint: {'center_x':0.5,'y':0}
         Label:
-            text: "Player"
-        Label:
-            text: "Score"
+            text: root.card_text
 
 <PackScreen>:
     name: "pack"
     BoxLayout:
+        padding: 10
+        spacing: 10
         Button:
-            text: "Menu"
-            size_hint_x: 15
-            size_hint_y: 15
+            text: "Return"
+            on_press:
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'menu'
+        Button:
+            text: "Card calibration"
+        Button:
+            text: "Create cards"
+        Button:
+            text: "Pick card pack"
