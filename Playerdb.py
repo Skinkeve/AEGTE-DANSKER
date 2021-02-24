@@ -18,27 +18,33 @@ from kivy.uix.label import Label
 #lav kivy
 
 # Declare both screens
-class MenuScreen(Screen):
-    name_input = ObjectProperty(None)#definerer name_input som et ObjectProperty
-    player_list = ObjectProperty(None)
+class Infodb():
+    def Setupdb(self):
+        self.plst = []
 
-    def Handler(ListItemButton):
-        pass
+class MenuScreen(Screen):
+    def ___init___(self):
+        name_input = ObjectProperty(None)#definerer name_input som et ObjectProperty
+        player_list = ObjectProperty(None)
+
 
     def submit_player(self):
         player_name = self.name_input.text #finder name_input som tekst
-        try:
-            if player_name not in self.playerlist:
-                self.player_list.adapter.data.extend([player_name]) #lav et nyt element med navn player_name?
-                self.player_list._trigger_reset_populate()
-                self.playerlist.append(player_name)#append til playerlist
-            else:
-                pass
-        except AttributeError:
-            self.playerlist = []
-            self.player_list.adapter.data.extend([player_name])
+        if player_name not in inf.plst and player_name.strip():#hvis navnet ikke er i listen og navnet ikke er tomt/false
+            self.player_list.adapter.data.extend([player_name]) #lav et nyt element med navn player_name?
             self.player_list._trigger_reset_populate()
-            self.playerlist.append(player_name)
+            inf.plst.append(player_name)#append til playerlist
+        else:
+            pass
+        #except AttributeError:
+            #print("ERROR")
+            #self.playerlist = []
+            #if player_name != " ":
+            #    self.player_list.adapter.data.extend([player_name])
+            #    self.player_list._trigger_reset_populate()
+            #    self.playerlist.append(player_name)
+            #else:
+        #        pass
 
 #jeg vil gerne have at man når man fjerner personer fra listen så behøver man ikke klikke hver gang, man kan bare klikke delete og så slettes den øverste
     def remove_player(self):#fjerner en spiller fra listen
@@ -88,9 +94,10 @@ sm.current = "menu"
 class MyMainApp(App):
     def build(self):
         return sm
-
+inf = Infodb()
 
 if __name__ == "__main__":
+    inf.Setupdb()
     MyMainApp().run()
 
 #pdb = PlayerdbApp()
