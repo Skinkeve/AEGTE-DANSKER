@@ -1,54 +1,53 @@
-#: import main Playerdb
 #: import ListAdapter kivy.adapters.listadapter.ListAdapter
 #: import ListItemButton kivy.uix.listview.ListItemButton
+#: import main Playerdb
 
-PlayerDB:#refererer til den root funktion der kaldes fra funktionen og der kan kun være 1
-
-<PLayerDB>:
-    orientation: "vertical" # skal vidst laves i BoxLayout?
-    name_input: name #refererer til name_input fra python scriptet
-    player_list: list_view #refererer til player_list fra python scriptet
-    padding: 10 #mellemrum mellem children og layoutbox
-    spacing: 10 #mellemrum mellem children i pixels
-
+<MenuScreen>:
+    name: "menu"
+    name_input: name_input
+    player_list: list_view
     BoxLayout:
-        size_hint_y: None
-        height: "40dp"
+        padding: 10
+        spacing: 10
+        orientation: "vertical"
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
 
-        Label:
-            text: "Playername"
-        TextInput:
-            id: name
+            Label:
+                text: "Playername"
+            TextInput:
+                id: name_input
+                multiline: False
 
-    BoxLayout:
-        size_hint_y: None
-        height: "40dp"
-        Button:
-            text: "Submit new player" #teksten der står på knappen
-            size_hint_x: 15
-            on_press: root.submit_player()
-        Button:
-            text: "Delete player" #teksten der står på knappen
-            size_hint_x: 15
-            on_press: root.remove_player()
-        Button:
-            text: "Start game" #teksten der står på knappen
-            size_hint_x: 15
-            #on_press: root.start_game()
-            on_press: root.manager.current = 'game'
-        Button:
-            text: "Manage cardpack" #teksten der står på knappen
-            size_hint_x: 15
-            on_press: root.pack_pick()
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Button:
+                text: "Submit new player" #teksten der står på knappen
+                size_hint_x: 15
+                on_press: root.submit_player()
+            Button:
+                text: "Delete player" #teksten der står på knappen
+                size_hint_x: 15
+                on_press: root.remove_player()
+            Button:
+                text: "Start game" #teksten der står på knappen
+                size_hint_x: 15
+                #on_press: root.start_game()
+                on_press: root.start_game()
+            Button:
+                text: "Manage cardpack" #teksten der står på knappen
+                size_hint_x: 15
+                on_press: root.pack_pick()
+    #kæmpe problemer med adapteren nedenfor
+        ListView:
+            id: list_view
+            adapter:
+                ListAdapter(data=[], cls=main.PLayerlistbtn)
 
-
-
-    ListView:
-        id: list_view
-        adapter:
-            ListAdapter(data=[], cls=main.PLayerlistbtn)
-
-<Game>:
+<GameScreen>:
+    name: "game"
     Button:
         text: "Next card"
     Label:
