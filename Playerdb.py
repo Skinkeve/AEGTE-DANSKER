@@ -22,6 +22,22 @@ class Infodb():
     def Setupdb(self):
         self.plst = []
 
+    def Scoreboard(self, dict):#indeholder selve spillerne og deres point
+        self.accesscoreboard = dict#det dict der indeholder spillere som keys og score som value
+
+class Scoremec():#holder styr på spillernes Score
+
+    def ScoreboardCreate(self,list_of_players):#laver et dict med spillerne og deres score
+        self.playerscoredict = {}
+        self.counter = len(list_of_players)-1
+        for x in list_of_players:
+            self.playerscoredict.update({list_of_players[self.counter] : 0})
+            self.counter -= 1
+        inf.Scoreboard(self.playerscoredict)
+        #Scoremec.Scoreprint()
+        #Gamemec.Randompick()
+        #kør det næste der skal køres herefter
+
 class MenuScreen(Screen):
     def ___init___(self):
         name_input = ObjectProperty(None)#definerer name_input som et ObjectProperty
@@ -36,15 +52,6 @@ class MenuScreen(Screen):
             inf.plst.append(player_name)#append til playerlist
         else:
             pass
-        #except AttributeError:
-            #print("ERROR")
-            #self.playerlist = []
-            #if player_name != " ":
-            #    self.player_list.adapter.data.extend([player_name])
-            #    self.player_list._trigger_reset_populate()
-            #    self.playerlist.append(player_name)
-            #else:
-        #        pass
 
 #jeg vil gerne have at man når man fjerner personer fra listen så behøver man ikke klikke hver gang, man kan bare klikke delete og så slettes den øverste
     def remove_player(self):#fjerner en spiller fra listen
@@ -52,7 +59,11 @@ class MenuScreen(Screen):
             selection = self.player_list.adapter.selection[0].text
             self.player_list.adapter.data.remove(selection) #fjern det der er inde i selection variablen
             self.player_list._trigger_reset_populate() #updater listview
-        #else if self.:#ellers hvis der er flere items, så slet det øverste
+            inf.plst.remove(selection)
+        #else:#ellers så slet det øverste
+            #selection = self.player_list.adapter.selection[1].text
+            #self.player_list.adapter.data.remove(selection) #fjern det der er inde i selection variablen
+            #self.player_list._trigger_reset_populate() #updater listview
             #selection = self.player_list.adapter.selection[0].text
             #self.player_list.adapter.data.remove(selection) #fjern det der er inde i selection variablen
             #self.player_list._trigger_reset_populate() #updater listview
@@ -60,20 +71,23 @@ class MenuScreen(Screen):
     def start_game(self):
         noplayerspopup = Popup(title='Errorpopup', content=Label(text='Add more players'), size_hint=(None, None), size=(400, 400))
         try:
-            if len(self.playerlist) < 2:
+            if len(inf.plst) < 2:
                 noplayerspopup.open()
             else:
+                score.ScoreboardCreate(inf.plst)
                 sm.current = "game"
         except AttributeError:
             noplayerspopup.open()
 
     def pack_pick(self):
-        pass
+        sm.current = "pack"
 
 class GameScreen(Screen):
 
     def Nextcard(self):
         pass
+class PackScreen(Screen):
+    pass
 
 class WindowManager(ScreenManager):
     pass
@@ -85,7 +99,7 @@ kv = Builder.load_file("Playerdb.kv")
 
 sm = WindowManager()
 
-screens = [MenuScreen(name="menu"), GameScreen(name="game")]
+screens = [MenuScreen(name="menu"), GameScreen(name="game"), PackScreen(name="pack")]
 for screen in screens:
     sm.add_widget(screen)
 
@@ -95,14 +109,8 @@ class MyMainApp(App):
     def build(self):
         return sm
 inf = Infodb()
+score = Scoremec()
 
 if __name__ == "__main__":
     inf.Setupdb()
     MyMainApp().run()
-
-#pdb = PlayerdbApp()
-#startgame = GameApp()
-#pdb.run()
-#Start.Game()
-#if __name__ == '__main__':
-#    TestApp().run()

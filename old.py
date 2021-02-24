@@ -22,22 +22,7 @@ class In_out():
     def Score():
         pass
 
-class Scoremec():#holder styr på spillernes Score
 
-    def ScoreboardCreate(self,list):
-        self.playerlist = list
-        self.playerscoredict = {}
-        self.counter = len(list)-1
-        for x in list:
-            self.playerscoredict.update({self.playerlist[self.counter] : 0})
-            self.counter -= 1
-        Scoremec.Scoreboard(self.playerscoredict)
-        Scoremec.Scoreprint()
-        Gamemec.Randompick()
-        #kør det næste der skal køres herefter
-
-    def Scoreboard(self, dict):#indeholder selve spillerne og deres point
-        self.accesscoreboard = dict#det dict der indeholder spillere som keys og score som value
 
     def Scoreprint(self): #skal printe spillernes score
         os.system('CLS')
