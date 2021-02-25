@@ -12,6 +12,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 from kivy.properties import StringProperty
+from random import randrange
 
 #to do:
 #lave et bedre system til at udvælge kort, måske med en lettere måde at definere chancer på
@@ -19,6 +20,48 @@ from kivy.properties import StringProperty
 #lav kivy
 
 # Declare both screens
+class Cardpicker():
+    def opencard():
+        pass
+
+    def CardTagsPicker(self, dict):#formålet med denne funktion er at vælge hvilke 'tags' der skal kigges efter i filen med kort
+        self.picker = random.randrange(1,101)#generer et tilfældigt tal mellem 1 og 101 hvor 1 er inkluderet men 101 er ikke
+        self.dval = list(dict.values())
+        self.dkey = list(dict.keys())
+        self.picked = None
+        if 0 < self.picker < self.dval[0]+1:
+            self.picked = self.dkey[0]
+        elif self.dval[0] < self.picker < self.dval[0]+self.dval[1]+1:
+            self.picked = self.dkey[1]
+        elif self.dval[0]+self.dval[1] < self.picker < self.dval[0]+self.dval[1]+self.dval[2]+1:
+            self.picked = self.dkey[2]
+        elif self.dval[0]+self.dval[1]+self.dval[2] < self.picker < self.dval[0]+self.dval[1]+self.dval[2]+self.dval[3]+1:
+            self.picked = self.dkey[3]
+        elif self.dval[0]+self.dval[1]+self.dval[2]+self.dval[3] < self.picker < self.dval[0]+self.dval[1]+self.dval[2]+self.dval[3]+self.dval[4]+1:
+            self.picked = self.dkey[4]
+        else:
+            print("ERROR in CardTagsPicker")
+        return self.picked
+
+    def Cardcategory(self):#en gruppe af dicts der indeholder et tal der udgør procentchancen for at den kategori bliver valgt
+        self.ppunishDict = {
+        "drinks":20,#eksempelvis er der 20% chance for at en kategori vælges hvis den har 20 som tal
+        "shots":20,
+        "strips":20,
+        "bottoms":20,
+        "embarassings":20
+        }
+        self.pcategoryDict = {
+        "stories":20,
+        "games":20,
+        "bullyings":20,
+        "fknowledges":20,
+        "guesses":20
+        }
+        #self.pthemeDict = {}
+
+
+
 class Infodb():
     def Setupdb(self):
         self.plst = []
@@ -87,7 +130,9 @@ class GameScreen(Screen):
     card_text = StringProperty()
 
     def Nextcard(self):
-        pass
+        card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
+        print(card.CardTagsPicker(card.ppunishDict))
+        print(card.CardTagsPicker(card.pcategoryDict))
 
 
 
@@ -115,6 +160,7 @@ class MyMainApp(App):
         return sm
 inf = Infodb()
 score = Scoremec()
+card = Cardpicker()
 
 if __name__ == "__main__":
     inf.Setupdb()
