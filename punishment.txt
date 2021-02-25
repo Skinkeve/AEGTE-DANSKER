@@ -1,0 +1,5 @@
+["Drik 1 tår", "Drik 2 tåre"]
+["Tag 1 shot", "Tag 2 shots"]
+["Smid 1 stykke tøj", "Smid 2 stykker tøj"]
+["Bund dit glas", "Bund dit glas fyld det op og bund det igen"]
+["Sig som en kylling", "Kys en fremmed"]

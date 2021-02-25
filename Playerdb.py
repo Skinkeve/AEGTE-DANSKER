@@ -21,8 +21,43 @@ from random import randrange
 
 # Declare both screens
 class Cardpicker():
-    def opencard():
-        pass
+    def openfile(self, str_location, str_location2):#denne funktion åbner en fil for at finde en str, som kan retuneres... funktionen kunne godt generaliseres og køres 2 gange, men det må være et fremtidigt projekt
+        self.punishfile = open("punishment.txt", "r")
+        self.catfile = open("category.txt", "r")
+        self.punishlist = []
+        self.catlist = []
+        self.returnlist = []
+        for x in self.punishfile.readlines():
+            self.punishlist.append(x)
+        if str_location == "drinks":
+            self.returnlist.append(self.punishlist[0])
+        elif str_location == "shots":
+            self.returnlist.append(self.punishlist[1])
+        elif str_location == "strips":
+            self.returnlist.append(self.punishlist[2])
+        elif str_location == "bottoms":
+            self.returnlist.append(self.punishlist[3])
+        elif str_location == "embarrassings":
+            self.returnlist.append(self.punishlist[4])
+        else:
+            print("ERROR1 in openfile")
+        for x in self.catfile.readlines():
+           self.catlist.append(x)
+        if str_location2 == "stories":
+            self.returnlist.append(self.catlist[0])
+        elif str_location2 == "games":
+            self.returnlist.append(self.catlist[1])
+        elif str_location2 == "bullyings":
+            self.returnlist.append(self.catlist[2])
+        elif str_location2 == "fknowledges":
+            self.returnlist.append(self.catlist[3])
+        elif str_location2 == "guesses":
+            self.returnlist.append(self.catlist[4])
+        else:
+            print("ERROR2 in openfile")
+        self.punishfile.close()
+        self.catfile.close()
+        print(self.returnlist)
 
     def CardTagsPicker(self, dict):#formålet med denne funktion er at vælge hvilke 'tags' der skal kigges efter i filen med kort
         self.picker = random.randrange(1,101)#generer et tilfældigt tal mellem 1 og 101 hvor 1 er inkluderet men 101 er ikke
@@ -131,8 +166,7 @@ class GameScreen(Screen):
 
     def Nextcard(self):
         card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
-        print(card.CardTagsPicker(card.ppunishDict))
-        print(card.CardTagsPicker(card.pcategoryDict))
+        card.openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict))
 
 
 
