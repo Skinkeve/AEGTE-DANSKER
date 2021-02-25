@@ -57,7 +57,7 @@ class Cardpicker():
             print("ERROR2 in openfile")
         self.punishfile.close()
         self.catfile.close()
-        print(self.returnlist)
+        print(self.returnlist)#denne skal retunereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     def CardTagsPicker(self, dict):#formålet med denne funktion er at vælge hvilke 'tags' der skal kigges efter i filen med kort
         self.picker = random.randrange(1,101)#generer et tilfældigt tal mellem 1 og 101 hvor 1 er inkluderet men 101 er ikke
