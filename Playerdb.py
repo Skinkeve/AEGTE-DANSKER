@@ -49,7 +49,7 @@ class Cardpicker():
         "shots":20,
         "strips":20,
         "bottoms":20,
-        "embarassings":20
+        "embarrassings":20
         }
         self.pcategoryDict = {
         "stories":20,
