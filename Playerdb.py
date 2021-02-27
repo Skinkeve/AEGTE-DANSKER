@@ -26,8 +26,8 @@ class Cardpicker():
         self.str = str(nonetype)
         self.splitstr = self.str.split("'")
         self.punishlist = self.splitstr[1].split("!")
-        self.catlist = self. splitstr[3].split("!")
-        print(self.punishlist, self.catlist)
+        self.catlist = self.splitstr[3].split("!")
+        return [self.punishlist[random.randrange(1,int(self.punishlist[0])+1)],self.catlist[random.randrange(1,int(self.catlist[0])+1)]]
 
     def Openfile(self, str_location, str_location2):#denne funktion åbner en fil for at finde en str, som kan retuneres... funktionen kunne godt generaliseres og køres 2 gange, men det må være et fremtidigt projekt
         self.punishfile = open("punishment.txt", "r")
