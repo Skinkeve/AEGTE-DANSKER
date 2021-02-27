@@ -21,7 +21,15 @@ from random import randrange
 
 # Declare both screens
 class Cardpicker():
-    def openfile(self, str_location, str_location2):#denne funktion åbner en fil for at finde en str, som kan retuneres... funktionen kunne godt generaliseres og køres 2 gange, men det må være et fremtidigt projekt
+
+    def Listpicker(self,nonetype):#denne funktion modtager en nonetype der indeholder flere elementer og udvælger så et element
+        self.str = str(nonetype)
+        self.splitstr = self.str.split("'")
+        self.punishlist = self.splitstr[1].split("!")
+        self.catlist = self. splitstr[3].split("!")
+        print(self.punishlist, self.catlist)
+
+    def Openfile(self, str_location, str_location2):#denne funktion åbner en fil for at finde en str, som kan retuneres... funktionen kunne godt generaliseres og køres 2 gange, men det må være et fremtidigt projekt
         self.punishfile = open("punishment.txt", "r")
         self.catfile = open("category.txt", "r")
         self.punishlist = []
@@ -57,7 +65,7 @@ class Cardpicker():
             print("ERROR2 in openfile")
         self.punishfile.close()
         self.catfile.close()
-        print(self.returnlist)#denne skal retunereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        return self.returnlist#denne skal retunereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     def CardTagsPicker(self, dict):#formålet med denne funktion er at vælge hvilke 'tags' der skal kigges efter i filen med kort
         self.picker = random.randrange(1,101)#generer et tilfældigt tal mellem 1 og 101 hvor 1 er inkluderet men 101 er ikke
@@ -166,7 +174,7 @@ class GameScreen(Screen):
 
     def Nextcard(self):
         card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
-        card.openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict))
+        card.Listpicker(card.Openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict)))
 
 
 

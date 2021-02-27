@@ -1,5 +1,5 @@
-["Drik 1 tår", "Drik 2 tåre"]
-["Tag 1 shot", "Tag 2 shots"]
-["Smid 1 stykke tøj", "Smid 2 stykker tøj"]
-["Bund dit glas", "Bund dit glas fyld det op og bund det igen"]
-["Sig som en kylling", "Kys en fremmed"]
+2!Drik 1 tår!Drik 2 tåre
+2!Tag 1 shot!Tag 2 shots
+2!Smid 1 stykke tøj!Smid 2 stykker tøj
+2!Bund dit glas!Bund dit glas fyld det op og bund det igen
+2!Sig som en kylling!Kys en fremmed
