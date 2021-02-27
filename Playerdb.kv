@@ -63,13 +63,14 @@
                 root.manager.transition.direction = 'right'
                 root.manager.current = 'menu'
         Button:
-            text: "Next"
+            text: root.card_punishment
             size_hint: .5, .25
             pos_hint: {'center_x':0.5,'y':0}
             on_press:
                 root.Nextcard()
         Label:
-            text: root.card_text
+            text: root.card_category
+            pos_hint: {'center_x':0.5,'y':0}
 
 <PackScreen>:
     name: "pack"
@@ -87,3 +88,12 @@
             text: "Create cards"
         Button:
             text: "Pick card pack"
+
+<IntroScreen>:
+    name: "intro"
+    BoxLayout:
+        padding: 10
+        spacing: 10
+        Button:
+            text: "SELVDESTRUER!"
+            background_color: (1, 0, 0, 1)

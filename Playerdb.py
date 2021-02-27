@@ -27,7 +27,12 @@ class Cardpicker():
         self.splitstr = self.str.split("'")
         self.punishlist = self.splitstr[1].split("!")
         self.catlist = self.splitstr[3].split("!")
-        return [self.punishlist[random.randrange(1,int(self.punishlist[0])+1)],self.catlist[random.randrange(1,int(self.catlist[0])+1)]]
+        self.returnlist = [self.punishlist[random.randrange(1,int(self.punishlist[0])+1)],self.catlist[random.randrange(1,int(self.catlist[0])+1)]]
+        print(type(self.returnlist[0]))
+        self.returnlist[0] = self.returnlist[0].replace("\n", "")
+        self.returnlist[1] = self.returnlist[1].replace("\n", "")
+        return self.returnlist
+        #ovenstående linje retunerer en liste med 2 tilfældige elementer, hvoraf det er et fra punishlist og 1 fra catlist
 
     def Openfile(self, str_location, str_location2):#denne funktion åbner en fil for at finde en str, som kan retuneres... funktionen kunne godt generaliseres og køres 2 gange, men det må være et fremtidigt projekt
         self.punishfile = open("punishment.txt", "r")
@@ -170,13 +175,17 @@ class MenuScreen(Screen):
         sm.current = "pack"
 
 class GameScreen(Screen):
-    card_text = StringProperty()
+    card_punishment = StringProperty()
+    card_category = StringProperty()
 
     def Nextcard(self):
         card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
-        card.Listpicker(card.Openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict)))
+        self.list = card.Listpicker(card.Openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict)))
+        self.card_punishment = self.list[0]
+        self.card_category = self.list[1]
 
-
+class IntroScreen(Screen):
+    pass
 
 class PackScreen(Screen):
     pass
@@ -191,7 +200,7 @@ kv = Builder.load_file("Playerdb.kv")
 
 sm = WindowManager()
 
-screens = [MenuScreen(name="menu"), GameScreen(name="game"), PackScreen(name="pack")]
+screens = [MenuScreen(name="menu"), GameScreen(name="game"), PackScreen(name="pack"), IntroScreen(name="intro")]
 for screen in screens:
     sm.add_widget(screen)
 
