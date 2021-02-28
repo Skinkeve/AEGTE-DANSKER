@@ -2,4 +2,4 @@
 1!spille spille spil
 1!peg på christian
 1!kender du kokken
-1!gæt en skofarve
+1!@ gæt skofarven på personen til højre for dig
