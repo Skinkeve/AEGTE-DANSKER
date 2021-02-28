@@ -57,20 +57,21 @@
         spacing: 10
         Button:
             text: "Return"
-            size_hint: .5,.10
+            size_hint: .5,.1
             pos_hint: {'x':0,'top':1}
             on_press:
                 root.manager.transition.direction = 'right'
                 root.manager.current = 'menu'
         Button:
-            text: root.card_punishment
-            size_hint: .5, .25
+            text: root.card_text
+            halign: 'center'
+            valign: 'center'
+            font_size: 0.05*self.height
+            color: (1, 0, 0, 1)
+            size_hint: 1, .9
             pos_hint: {'center_x':0.5,'y':0}
             on_press:
                 root.Nextcard()
-        Label:
-            text: root.card_category
-            pos_hint: {'center_x':0.5,'y':0}
 
 <PackScreen>:
     name: "pack"

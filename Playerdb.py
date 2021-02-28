@@ -105,8 +105,6 @@ class Cardpicker():
         }
         #self.pthemeDict = {}
 
-
-
 class Infodb():
     def Setupdb(self):
         self.plst = []
@@ -172,14 +170,25 @@ class MenuScreen(Screen):
         sm.current = "pack"
 
 class GameScreen(Screen):
-    card_punishment = StringProperty()
-    card_category = StringProperty()
+    card_text = StringProperty()
 
     def Nextcard(self):
         card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
         self.list = card.Listpicker(card.Openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict)))
-        self.card_punishment = self.list[0]
-        self.card_category = self.list[1]
+        self.needplayers = self.list[1].count("@")
+        #while self.needplayers > 0:
+        if self.needplayers == 1:
+                self.list[1] = self.list[1].replace("@", inf.plst[randrange(0,len(inf.plst)-1)])
+        elif self.needplayers == 2:
+                self.player1 = inf.plst[randrange(0,len(inf.plst)-1)]
+                self.player2 = inf.plst[randrange(0,len(inf.plst)-1)]
+                #der skal laves noget der checker med 100% sikkerhed at player1 og player2 ikke er den samme men while loops fungerer ikke
+                #while self.player2 == self.player1:
+                    #self.player2 = inf.plst[randrange(0,len(inf.plst)-1)]
+                self.list[1] = self.list[1].replace("@", self.player1)
+                self.list[1] = self.list[1].replace("@", self.player2, 1)
+        self.woven = str(self.list[1]+" ELLER "+self.list[0])
+        self.card_text = self.woven
 
 class IntroScreen(Screen):
     pass
