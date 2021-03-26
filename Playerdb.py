@@ -105,6 +105,7 @@ class Cardpicker():
 class Infodb():
     def Setupdb(self):
         self.plst = []
+        self.gamelenght = randrange(1, 10)
 
     def Scoreboard(self, dict):#indeholder selve spillerne og deres point
         self.accesscoreboard = dict#det dict der indeholder spillere som keys og score som value
@@ -170,21 +171,25 @@ class GameScreen(Screen):
     card_text = StringProperty()
 
     def Nextcard(self):
-        card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
-        self.list = card.Listpicker(card.Openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict)))
-        self.needplayers = self.list[1].count("@")#hvor mange @ er der i list[1] // @ er et symbol for mennesker
-        self.currentplayers = inf.plst #henter en liste over spillere
-        if self.needplayers == 1:#hvis der skal bruges en spiller
-                self.list[1] = self.list[1].replace("@", self.currentplayers[randrange(0,len(self.currentplayers))])
-        elif self.needplayers == 2:#hvis der skal bruges 2 spillere
-                self.player1 = self.currentplayers[randrange(0,len(self.currentplayers))]
-                self.player2 = randrange(0,len(self.currentplayers))
-                #der skal laves noget der checker med 100% sikkerhed at player1 og player2 ikke er den samme men while loops fungerer ikke
+        if inf.gamelenght > 0:
+            card.Cardcategory()#denne linje skal nok ikke ske her hver gang der trykkes på knappen, men den har det fint her for nu
+            self.list = card.Listpicker(card.Openfile(card.CardTagsPicker(card.ppunishDict),card.CardTagsPicker(card.pcategoryDict)))
+            self.needplayers = self.list[1].count("@")#hvor mange @ er der i list[1] // @ er et symbol for mennesker
+            self.currentplayers = inf.plst #henter en liste over spillere
+            if self.needplayers == 1:#hvis der skal bruges en spiller
+                    self.list[1] = self.list[1].replace("@", self.currentplayers[randrange(0,len(self.currentplayers))])
+            elif self.needplayers == 2:#hvis der skal bruges 2 spillere
+                    self.player1 = self.currentplayers[randrange(0,len(self.currentplayers))]
+                    self.player2 = randrange(0,len(self.currentplayers))
+                    #der skal laves noget der checker med 100% sikkerhed at player1 og player2 ikke er den samme men while loops fungerer ikke
 
-                self.list[1] = self.list[1].replace("@", self.player1)
-                self.list[1] = self.list[1].replace(self.player1, self.currentplayers[self.player2], 1)
-        self.woven = str(self.list[1]+" ELLER "+self.list[0])
-        self.card_text = self.woven
+                    self.list[1] = self.list[1].replace("@", self.player1)
+                    self.list[1] = self.list[1].replace(self.player1, self.currentplayers[self.player2], 1)
+            self.woven = str(self.list[1]+" ELLER "+self.list[0])
+            self.card_text = self.woven
+            inf.gamelenght += -1
+        else:# nedenstående skal afspille et sidste kort fra en speciel bunke af kort og derefter afsluttes spillet, så skal der laves en mulighed for at spille igen
+            self.card_text = "Game over"
 
 class IntroScreen(Screen):
     pass
