@@ -69,24 +69,21 @@ class Cardpicker():
         self.catfile.close()
         return self.returnlist#denne skal retunereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
-    def CardTagsPicker(self, dict):#formålet med denne funktion er at vælge hvilke 'tags' der skal kigges efter i filen med kort
+    def CardTagsPicker(self, dict):#Denne funktion modtager et dict med x antal elementer. det dict indeholder en key som er et ord og en val som er chancen for at den key bliver valgt
+    #det er vigtigt at den totale sum val er 100 ellers er det ikke ligeligt fordelt. Funktionen vælger en tilfældig key og retunerer den
         self.picker = random.randrange(1,101)#generer et tilfældigt tal mellem 1 og 101 hvor 1 er inkluderet men 101 er ikke
         self.dval = list(dict.values())
         self.dkey = list(dict.keys())
-        self.picked = None
-        if 0 < self.picker < self.dval[0]+1:
-            self.picked = self.dkey[0]
-        elif self.dval[0] < self.picker < self.dval[0]+self.dval[1]+1:
-            self.picked = self.dkey[1]
-        elif self.dval[0]+self.dval[1] < self.picker < self.dval[0]+self.dval[1]+self.dval[2]+1:
-            self.picked = self.dkey[2]
-        elif self.dval[0]+self.dval[1]+self.dval[2] < self.picker < self.dval[0]+self.dval[1]+self.dval[2]+self.dval[3]+1:
-            self.picked = self.dkey[3]
-        elif self.dval[0]+self.dval[1]+self.dval[2]+self.dval[3] < self.picker < self.dval[0]+self.dval[1]+self.dval[2]+self.dval[3]+self.dval[4]+1:
-            self.picked = self.dkey[4]
-        else:
-            print("ERROR in CardTagsPicker")
-        return self.picked
+        #self.picked = None
+        self.begin = 0
+        self.end = 0
+        for x in range(len(self.dkey)):
+            if self.begin < self.picker < self.end+self.dval[x]+1:
+                return self.dkey[x]
+            else:
+                self.begin += self.dval[x]
+                self.end += self.dval[x]
+
 
     def Cardcategory(self):#en gruppe af dicts der indeholder et tal der udgør procentchancen for at den kategori bliver valgt
         self.ppunishDict = {
