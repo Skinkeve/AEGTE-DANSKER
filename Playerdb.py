@@ -105,7 +105,7 @@ class Cardpicker():
 class Infodb():
     def Setupdb(self):
         self.plst = []
-        self.gamelenght = randrange(1, 10)
+        self.gamelenght = randrange(100, 150)
 
     def Scoreboard(self, dict):#indeholder selve spillerne og deres point
         self.accesscoreboard = dict#det dict der indeholder spillere som keys og score som value
@@ -197,17 +197,22 @@ class IntroScreen(Screen):
 class PackScreen(Screen):
     pass
 
+class Cardcreationscreen(Screen):
+    punishment = ObjectProperty(True)
+    category = ObjectProperty(False)
+
 class WindowManager(ScreenManager):
     pass
 
 class PLayerlistbtn(ListItemButton): #fungerer som en slags handler?????
     pass
 
+
 kv = Builder.load_file("Playerdb.kv")
 
 sm = WindowManager()
 
-screens = [MenuScreen(name="menu"), GameScreen(name="game"), PackScreen(name="pack"), IntroScreen(name="intro")]
+screens = [MenuScreen(name="menu"), GameScreen(name="game"), PackScreen(name="pack"), IntroScreen(name="intro"), Cardcreationscreen(name="create")]
 for screen in screens:
     sm.add_widget(screen)
 

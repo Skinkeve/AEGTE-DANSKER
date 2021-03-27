@@ -1,6 +1,10 @@
 #: import ListAdapter kivy.adapters.listadapter.ListAdapter
 #: import ListItemButton kivy.uix.listview.ListItemButton
 #: import main Playerdb
+#: import CheckBox kivy.uix.checkbox
+
+<CustLabel@Label>
+    color: 1, 0, 0, 1
 
 <MenuScreen>:
     name: "menu"
@@ -36,13 +40,13 @@
                 size_hint_x: 15
                 #on_press: root.start_game()
                 on_press:
-                    root.manager.transition.direction = 'left'
+                    root.manager.transition.direction = "left"
                     root.start_game()
             Button:
                 text: "Manage cardpack" #teksten der står på knappen
                 size_hint_x: 15
                 on_press:
-                    root.manager.transition.direction = 'left'
+                    root.manager.transition.direction = "left"
                     root.pack_pick()
     #kæmpe problemer med adapteren nedenfor
         ListView:
@@ -58,18 +62,18 @@
         Button:
             text: "Return"
             size_hint: .5,.1
-            pos_hint: {'x':0,'top':1}
+            pos_hint: {"x":0,"top":1}
             on_press:
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'menu'
+                root.manager.transition.direction = "right"
+                root.manager.current = "menu"
         Button:
             text: root.card_text
-            halign: 'center'
-            valign: 'center'
+            halign: "center"
+            valign: "center"
             font_size: 0.05*self.height
             color: (1, 0, 0, 1)
             size_hint: 1, .9
-            pos_hint: {'center_x':0.5,'y':0}
+            pos_hint: {"center_x":0.5,"y":0}
             on_press:
                 root.Nextcard()
 
@@ -81,14 +85,49 @@
         Button:
             text: "Return"
             on_press:
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'menu'
+                root.manager.transition.direction = "right"
+                root.manager.current = "menu"
         Button:
             text: "Card calibration"
         Button:
             text: "Create cards"
+            on_press:
+                root.manager.transition.direction = "left"
+                root.manager.current = "create"
         Button:
             text: "Pick card pack"
+
+<Cardcreationscreen>:
+    name: "create"
+    FloatLayout:
+        padding: 10
+        spacing: 10
+        Button:
+            text: "Return"
+            size_hint: .5,.1
+            pos_hint: {"x":0,"top":1}
+            on_press:
+                root.manager.transition.direction = "right"
+                root.manager.current = "pack"
+    BoxLayout:
+        CustLabel:
+            text: "Card type"
+            size_hint_x: .265
+        CheckBox:
+            group: "cardtype"
+            value: root.punishment
+            size_hint_x: .025
+        CustLabel:
+            text: "Punishment"
+            size_hint_x: .15
+        CheckBox:
+            group: "cardtype"
+            value: root.category
+            size_hint_x: .025
+        CustLabel:
+            text: "Category"
+            size_hint_x: .15
+
 
 <IntroScreen>:
     name: "intro"
